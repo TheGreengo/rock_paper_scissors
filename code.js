@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Page Title</title>
-</head>
-<body>
-  <script>
-
 function computerPlay()
 {
     let playNum = Math.random();
@@ -103,9 +94,3 @@ function game()
         }
     }
 }
-
-    console.log(game())
-
-  </script>
-</body>
-</html>
