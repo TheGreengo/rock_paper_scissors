@@ -1,96 +1,80 @@
-function computerPlay()
-{
-    let playNum = Math.random();
-    playNum = playNum * 3;
+const btns = document.querySelectorAll('.option');
+const rock = document.querySelector('#rock');
+const paper = document.querySelector('#paper');
+const scissors = document.querySelector('#scissors');
+const result = document.querySelector('.final-results');
+const play = document.querySelector('#playWin');
+const comp = document.querySelector('#compWin');
+const resetBut = document.querySelector('.reset');
 
-    if (playNum > 2)
+resetBut.addEventListener('click', () => reset());
+
+rock.addEventListener('click', () => playGame(computerPlay(),"rock"));
+paper.addEventListener('click', () => playGame(computerPlay(),"paper"));
+scissors.addEventListener('click', () => playGame(computerPlay(),"scissors"));
+
+let numWin = 0;
+let numLose = 0;
+let over = false;
+
+function playGame(input,computer){
+if (over != true)
+{
+if(input == "rock" && computer == "rock"){
+    result.textContent = "Tie!";
+}else if(input == "rock" && computer == "paper"){
+    comp.textContent = ++ numLose;
+    result.textContent = "Paper beats Rock! You Lose!";
+}else if(input == "rock" && computer == "scissors"){
+    play.textContent = ++ numWin;
+    result.textContent = "Rock beats Scissors! You Win!";
+}else if(input == "scissors" && computer == "rock"){
+    comp.textContent = ++ numLose;
+    result.textContent = "Rock beats Scissors! You Lose!";
+}else if(input == "scissors" && computer == "paper"){
+    play.textContent = ++ numWin;
+    result.textContent = "Scissors beats Paper! You Win!";
+}else if(input == "scissors" && computer == "scissors"){
+    result.textContent = "Tie!";
+}else if(input == "paper" && computer == "rock"){
+    play.textContent = ++ numWin;
+    result.textContent = "Paper beats Rock! You Win!";
+}else if(input == "paper" && computer == "paper"){
+    result.textContent = "Tie!";
+}else if(input == "paper" && computer == "scissors"){
+    comp.textContent = ++ numLose;
+    result.textContent = "Scissors beats Paper! You Lose!";
+}
+checkWinner();
+}
+}
+
+function computerPlay(){
+    let answer = Math.random() * 3;
+    if (answer >= 2){return "rock";}
+    else if (answer >= 1){return "paper";}
+    else {return "scissors";}
+}
+
+function checkWinner(){
+    if (numWin == 5)
     {
-        return "Rock";
+        result.textContent = "You Win! Congrats! To play again, click the reset button!";
+        over = true;
     }
-    else if (playNum > 1)
+    if (numLose == 5)
     {
-        return "Paper";
-    }
-    else
-    {
-        return "Scissors"
+        result.textContent = "You Lost! So sorry! To play again, click the reset button!";
+        over = true;
     }
 }
 
-function playGame(computer,input)
+function reset()
 {
-    input = input.toLowerCase();
-    if (computer == "Rock" && input == "scissors")
-    {
-        return "You lose! Rock beats Scissors";
-    }
-    if (computer == "Rock" && input == "rock")
-    {
-        return "Tie!";
-    }
-    if (computer == "Rock" && input == "paper")
-    {
-        return "You win! Paper beats Rock!";
-    }
-    if (computer == "Scissors" && input == "scissors")
-    {
-        return "Tie!";
-    }
-    if (computer == "Scissors" && input == "rock")
-    {
-        return "You win! Rock beats Scissors!";
-    }
-    if (computer == "Scissors" && input == "paper")
-    {
-        return "You lose! Scissors beats Paper"
-    }
-    if (computer == "Paper" && input == "scissors")
-    {
-        return "You win! Scissors beats Paper!";
-    }
-    if (computer == "Paper" && input == "rock")
-    {
-        return "You lose! Paper beats Rock"
-    }
-    if (computer == "Paper" && input == "paper")
-    {
-        return "Tie!";
-    }
-    else
-    {
-        return "unrecognized response";
-    }
-}
-
-function game()
-{
-    let done = false;
-    let numWin = 0;
-    let numLose = 0;
-    let numTie = 0;
-    while (done == false)
-    {
-        let pi = playGame(computerPlay(),window.prompt("To play, please type in either Rock, Paper, or Scissors"));
-        
-        if (pi == "You lose! Paper beats Rock" || pi == "You lose! Rock beats Scissors" || pi == "You lose! Scissors beats Paper")
-        {
-            numLose = numLose + 1;
-        }
-        if (pi == "You win! Paper beats Rock!" || pi == "You win! Rock beats Scissors!" || pi == "You win! Scissors beats Paper!")
-        {
-            numWin = numWin + 1;
-        }
-        if (pi == "Tie!")
-        {
-            numTie = numTie + 1;
-        }
-        if (numLose == 5)
-        {
-            return "Too bad! You lose!";
-        }
-        if (numWin == 5)
-        {
-            return "Congrats! You won!";
-        }
-    }
+    over = false;
+    numLose = 0;
+    comp.textContent = numLose;
+    numWin = 0;
+    play.textContent = numWin;
+    result.textContent = "Welcome to a new game!!";
 }
